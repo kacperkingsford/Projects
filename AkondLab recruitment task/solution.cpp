@@ -54,6 +54,10 @@ vector<pair<int, int>> findNeighbors(vector<float> A, vector<pair<float, int>> B
 }
 //naive implementation would be O(n*m)
 //complexity of my solution is O(logm * max(n,m))
+
+//extensions can be easily achived by adding/removing one 'if' statement in binarysearch function
+//option for skipping identical elements - delete 'if (B[mid].first == A)' in binarysearch function
+//option for float parameter epsilon - add if statement where we will check wether the value is less than epsilon
 int main()
 {
     vector<float> A;
@@ -84,12 +88,14 @@ int main()
               end = std::make_move_iterator(result.end());
          it != end; ++it)
     {
-        neighbors.push_back(std::move(it->first));
-        distances.push_back(std::move(it->second));
+        distances.push_back(std::move(it->first));
+        neighbors.push_back(std::move(it->second));
     }
+    //indexes in answer are counted from 0!
     printVector(neighbors);
     cout << "\n";
     printVector(distances);
 
     return 0;
 }
+
