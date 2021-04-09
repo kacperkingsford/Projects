@@ -5,7 +5,8 @@
 
 using namespace std;
 
-void printVector(vector<int> &vec)
+template <typename T>
+void printVector(vector<T> &vec)
 {
     for (int i = 0; i < vec.size(); i++)
     {
@@ -39,10 +40,10 @@ void binarySearch(vector<pair<float, int>> B, int l, int r, float A, float &mind
         }
     }
 }
-vector<pair<int, int>> findNeighbors(vector<float> A, vector<pair<float, int>> B)
+vector<pair<float, int>> findNeighbors(vector<float> A, vector<pair<float, int>> B)
 {                             //let length of B is m and length of A is n
     sort(B.begin(), B.end()); //sort B in O(mlogm)
-    vector<pair<int, int>> result;
+    vector<pair<float, int>> result;
     for (int i = 0; i < A.size(); i++) //for every element of A(n elements) we use binarysearch
     {                                  // binarysearch is O(logm) so whole loop is O(n*logm)
         int index;
@@ -81,9 +82,9 @@ int main()
         cin >> in;
         B.push_back(make_pair(in, i));
     }
-    vector<pair<int, int>> result = findNeighbors(A, B);
+    vector<pair<float, int>> result = findNeighbors(A, B);
     vector<int> neighbors;
-    vector<int> distances;
+    vector<float> distances;
     for (auto it = std::make_move_iterator(result.begin()), //convert vector of pairs into neighbors and distances
               end = std::make_move_iterator(result.end());
          it != end; ++it)
