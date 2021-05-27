@@ -10,6 +10,7 @@ public class Main {
             System.out.println("Text average word lengths is  " + solution.averageWordLength());
             solution.getLongestString();
             solution.getLShortestString();
+            solution.countWordsToFile();
         } catch (IOException e) {
             e.printStackTrace();
         }

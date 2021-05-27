@@ -1,7 +1,9 @@
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
+import java.security.KeyStore;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Solution {
 
@@ -26,7 +28,7 @@ public class Solution {
             }
         }
         System.out.println("Longest word/words length is: " + currentMaxLength);
-        System.out.println("Longest words: " + longestStringsArray.toString());
+        System.out.println("Longest word/words: " + longestStringsArray.toString());
     }
 
     //symetric function to getLongestString
@@ -44,7 +46,7 @@ public class Solution {
             }
         }
         System.out.println("Shortest word/words length is: " + currentMinLength);
-        System.out.println("Shortest words: " + shortestStringsArray.toString());
+        System.out.println("Shortest word/words: " + shortestStringsArray.toString());
     }
 
     public int arraySize(){
@@ -57,8 +59,25 @@ public class Solution {
             sum += word.length();
         }
         return sum / arraySize();
-
     }
+
+    public void countWordsToFile(){
+        Map<String, Integer> stringIntegerMap = new HashMap<String, Integer>();
+        for(String word : content){
+            if(stringIntegerMap.containsKey(word)){
+                stringIntegerMap.replace(word, stringIntegerMap.get(word) + 1);
+            }
+            else {
+                stringIntegerMap.put(word, 1);
+            }
+        }
+        Map<String,Integer> sortedMap = stringIntegerMap.entrySet().stream().sorted(Map.Entry.<String,Integer>comparingByValue().reversed())
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
+                        (e1, e2) -> e1, LinkedHashMap::new));
+        System.out.println(sortedMap);
+    }
+
+
 
     public Solution(String[] args) throws IOException {
         convertToString(args[0]);
