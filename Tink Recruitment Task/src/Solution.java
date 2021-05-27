@@ -1,7 +1,8 @@
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.security.KeyStore;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -61,7 +62,7 @@ public class Solution {
         return sum / arraySize();
     }
 
-    public void countWordsToFile(){
+    public void countWordsToFile() throws FileNotFoundException {
         Map<String, Integer> stringIntegerMap = new HashMap<String, Integer>();
         for(String word : content){
             if(stringIntegerMap.containsKey(word)){
@@ -74,11 +75,12 @@ public class Solution {
         Map<String,Integer> sortedMap = stringIntegerMap.entrySet().stream().sorted(Map.Entry.<String,Integer>comparingByValue().reversed())
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
                         (e1, e2) -> e1, LinkedHashMap::new));
-        System.out.println(sortedMap);
+        String mapAsString = sortedMap.keySet().stream().map(key -> key + " " + sortedMap.get(key) + "\n").collect(Collectors.joining());
+        System.out.println("File result.txt was generated!");
+        PrintWriter outputFile = new PrintWriter("result.txt");
+        outputFile.println(mapAsString);
+        outputFile.close();
     }
-
-
-
     public Solution(String[] args) throws IOException {
         convertToString(args[0]);
     }
