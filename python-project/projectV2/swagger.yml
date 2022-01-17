@@ -1,0 +1,202 @@
+swagger: "2.0"
+info:
+  description: This is the swagger file that goes with our server code
+  version: "1.0.0"
+  title: Swagger Rest Article
+consumes:
+  - application/json
+produces:
+  - application/json
+
+basePath: /api
+
+paths:
+  /todos:
+    get:
+      operationId: todos.read_all
+      tags:
+        - Todos
+      summary: Read the entire set of todos, sorted by creation/update timestamp
+      description: Read the entire set of todos, sorted by creation/update timestamp
+      responses:
+        200:
+          description: Successfully read todos
+          schema:
+            type: array
+            items:
+              properties:
+                todo_id:
+                  type: string
+                  description: Id of the todo
+                name:
+                  type: string
+                  description: Name of the todo
+                description:
+                  type: string
+                  description: Description of the todo
+                created_at:
+                  type: string
+                  description: Creation/Update timestamp of the todo
+                done:
+                  type: boolean
+                  description: True when todo is done, otherwise false
+
+    post:
+      operationId: todos.create
+      tags:
+        - Todos
+      summary: Create a todo
+      description: Create a new todo
+      parameters:
+        - name: todo
+          in: body
+          description: Todo to create
+          required: True
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                description: Name of todo to create
+              description:
+                type: string
+                description: Description of todo to create
+      responses:
+        201:
+          description: Successfully created todo
+          schema:
+            properties:
+              todo_id:
+                type: string
+                description: Id of the todo
+              name:
+                type: string
+                description: Name of the todo
+              description:
+                type: string
+                description: Description of the todo
+              created_at:
+                type: string
+                description: Creation/Update timestamp of the todo
+              done:
+                type: boolean
+                description: True when todo is done, otherwise false
+
+  /todos/{todo_id}:
+    get:
+      operationId: todos.read_one
+      tags:
+        - Todos
+      summary: Read one todo
+      description: Read one todo
+      parameters:
+        - name: todo_id
+          in: path
+          description: Id of the todo to get
+          type: integer
+          required: True
+      responses:
+        200:
+          description: Successfully read todo
+          schema:
+            type: object
+            properties:
+              todo_id:
+                type: string
+                description: Id of the todo
+              name:
+                type: string
+                description: Name of the todo
+              description:
+                type: string
+                description: Description of the todo
+              created_at:
+                type: string
+                description: Creation/Update timestamp of the todo
+              done:
+                type: boolean
+                description: True when todo is done, otherwise false
+
+    put:
+      operationId: todos.update
+      tags:
+        - Todos
+      summary: Update a todo
+      description: Update a todo
+      parameters:
+        - name: todo_id
+          in: path
+          description: Id the todo to update
+          type: integer
+          required: True
+        - name: todo
+          in: body
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                description: Name of the todo
+              description:
+                type: string
+                description: Description of the todo
+      responses:
+        200:
+          description: Successfully updated todo
+          schema:
+            properties:
+              todo_id:
+                type: string
+                description: Id of the todo
+              name:
+                type: string
+                description: Name of the todo
+              description:
+                type: string
+                description: Description of the todo
+              created_at:
+                type: string
+                description: Creation/Update timestamp of the todo
+              done:
+                type: boolean
+                description: True when todo is done, otherwise false
+
+    delete:
+      operationId: todos.delete
+      tags:
+        - Todos
+      summary: Delete a todo from the todos list
+      description: Delete a todo
+      parameters:
+        - name: todo_id
+          in: path
+          type: integer
+          description: Id of the todo to delete
+          required: true
+      responses:
+        200:
+          description: Successfully deleted a todo
+
+  /todos/{todo_id}/done/{status}:
+    put:
+      operationId: todos.update_status
+      tags:
+        - Todos
+      summary: Read one todo
+      description: Read one todo
+      parameters:
+        - name: todo_id
+          in: path
+          description: Id of the todo to get
+          type: integer
+          required: True
+        - name: status
+          in: path
+          description: Status of todo
+          type: boolean
+          required: True
+      responses:
+        204:
+          description: Successfully updated todo status
+        404:
+          description: Not found todo with given id
